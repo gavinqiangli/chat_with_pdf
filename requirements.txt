@@ -1,0 +1,7 @@
+openai
+python-dotenv
+pydantic==1.*
+langchain
+langchain_openai
+langchain_community
+streamlit
