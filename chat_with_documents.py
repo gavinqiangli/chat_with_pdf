@@ -49,9 +49,9 @@ def configure_retriever(uploaded_files):
     splits = text_splitter.split_documents(docs)
 
     # Create embeddings and store in vectordb
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L12-v2")    # takes 40s - 120s to run, but free
+    # embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L12-v2")    # takes 40s - 120s to run, but free
     # embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-large-en-v1.5")   # takes forever to run
-    # embeddings = OpenAIEmbeddings() # takes about 35s - 70s to run, but with cost
+    embeddings = OpenAIEmbeddings() # takes about 35s - 70s to run, but with cost
     vectordb = DocArrayInMemorySearch.from_documents(splits, embeddings)
 
     # Define retriever
@@ -94,10 +94,6 @@ class PrintRetrievalHandler(BaseCallbackHandler):
         self.status.update(state="complete")
 
 openai_api_key = os.environ.get('OPENAI_API_KEY')
-# openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
-# if not openai_api_key:
-#     st.info("Please add your OpenAI API key to continue.")
-#     st.stop()
 
 uploaded_files = st.sidebar.file_uploader(
     label="Upload PDF files", type=["pdf"], accept_multiple_files=True
